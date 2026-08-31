@@ -1,5 +1,7 @@
 # fishing-game-source｜捕鱼游戏源码 | Fishing Game Source Code | Cocos+C++ 街机捕鱼平台 | 经典模式+比赛+玉石场
 
+[简体中文](README.md) | [繁體中文](README.zh-TW.md) | [English](README.en.md)
+
 <p align="center">
   <img src="https://img.shields.io/badge/Cocos2d-x-3.17+-blue?style=for-the-badge" alt="Cocos">
   <img src="https://img.shields.io/badge/C%2B%2B-17-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="C++17">
@@ -47,9 +49,9 @@
 
 **Fishing Coin Lobby（捕鱼金币大厅 / 捕鱼大厅）** 是一套完整的**商业级街机游戏平台源码**，专为追求高性能和稳定运行的运营商打造。
 
-本系统包含 **海魔来袭、经典模式、比赛模式、玉石场、找刺激** 等核心玩法，覆盖 1-30000 倍率区间，内置 **商城、排行榜、保险箱、任务、JackPot、刮刮乐、转盘** 等完整系统，以及 **Node.js 运营后台**，支持**中文、英文等多语言**，可快速打包发布到 **iOS App Store** 和 **Google Play**。
+本系统包含 **海魔来袭、经典模式、比赛模式、玉石场、找刺激** 等核心玩法，覆盖 1-30000 倍率区间，内置 **商城、排行榜、保险箱、任务、JackPot、刮刮乐、转盘** 等完整系统，以及 **Node.js 运营后台**，支持**中文、英文等多语言**
 
-&gt; **适合搜索关键词**：捕鱼金币大厅源码、捕鱼积分大厅源码、Fishing Game Source Code、Ocean King Source Code、Fish Shooter Platform、街机游戏源码、Arcade Game Source Code、Cocos 捕鱼源码、C++ 街机服务器、捕鱼运营后台、捕鱼游戏 APP 源码、金币场捕鱼源码、积分场捕鱼源码、捕鱼二次开发、捕鱼定制开发、捕鱼出海、海魔来袭源码、捕鱼比赛模式、捕鱼玉石场
+&gt; **适合搜索关键词**：捕鱼金币大厅源码、捕鱼大厅源码、Fishing Game Source Code、Ocean King Source Code、Fish Shooter Platform、街机游戏源码、Arcade Game Source Code、Cocos 捕鱼源码、C++ 街机服务器、捕鱼运营后台、捕鱼游戏 APP 源码、金币场捕鱼源码、积分场捕鱼源码、捕鱼二次开发、捕鱼出海、海魔来袭源码、捕鱼比赛模式、捕鱼玉石场
 
 | 语言 | 项目名称 |
 |------|---------|
@@ -156,19 +158,6 @@ BOSS 级海魔随机登场，全屏攻击，击杀可获得巨额奖励，最高
 
 
 
-## 快速定制
-
-本项目采用模块化架构设计，二次开发效率极高：
-
-| 模块 | 替换方式 | 预计工时 |
-|------|---------|---------|
-| UI 界面 | 替换 Cocos 场景和 UI 资源 | 1-3 天 |
-| 鱼类/炮台 | 替换 Spine 动画和 Sprite 资源 | 2-4 小时 |
-| 音效音乐 | 替换 Audio 资源 | 2-4 小时 |
-| 游戏名称/Logo | 修改配置表 + 替换启动图 | 2-4 小时 |
-| 金币档位 | 修改后台配置表 | 30 分钟 |
-| 活动奖励 | 修改后台运营配置 | 30 分钟 |
-| 新增语言 | 翻译 JSON 语言包 | 1-2 天 |
 
 ### 定制示例：修改游戏名称
 
@@ -263,6 +252,21 @@ npm run build
 ./Server/build/GameServer --config=../Config/server.conf
 cd Admin && npm start
 
+## 产品截图
+
+
+
+![捕鱼游戏产品截图 01](docs/assets/screenshots/dx3.jpg)
+![捕鱼游戏产品截图 02](docs/assets/screenshots/hx3.jpg)
+![捕鱼游戏产品截图 03](docs/assets/screenshots/jx1.jpg)
+![捕鱼游戏产品截图 04](docs/assets/screenshots/jx4.jpg)
+![捕鱼游戏产品截图 05](docs/assets/screenshots/nx1.jpg)
+![捕鱼游戏产品截图 06](docs/assets/screenshots/x1.jpg)
+![捕鱼游戏产品截图 07](docs/assets/screenshots/x1s.jpg)
+![捕鱼游戏产品截图 08](docs/assets/screenshots/x2.jpg)
+![捕鱼游戏产品截图 09](docs/assets/screenshots/ysx1.jpg)
+![捕鱼游戏产品截图 10](docs/assets/screenshots/yu.png)
+![捕鱼游戏产品截图 11](docs/assets/screenshots/zhandou.jpg)
 
 ## 联系我们
 | 渠道       | 联系方式                                                                          |
@@ -277,7 +281,7 @@ cd Admin && npm start
 Q1: 这个项目可以商用吗？需要授权吗？
 A: 源码仅供学习研究。如需商用上线运营，请联系获取商业授权协议和技术支持。
 Q2: 支持哪些平台？可以发布到 App Store 吗？
-A: 支持 iOS 12+ 和 Android 5+，已针对 App Store 和 Google Play 审核要求优化，最快 3 天可提交审核。
+A: 支持 iOS 12+ 和 Android 5+
 Q3: 二次开发难度大吗？需要多少人团队？
 A: 模块化设计，UI/音效/配置均可快速替换。最小团队 1 名 Cocos 开发 + 1 名服务端开发即可在 2 周内完成定制开发上线。
 Q4: 最大支持多少人在线？
