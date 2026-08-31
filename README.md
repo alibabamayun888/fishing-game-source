@@ -1,28 +1,27 @@
-# fishing-game-source
-捕鱼游戏源码 | Fishing Game Source Code | Cocos+C++ 街机捕鱼平台 | 经典模式+比赛+玉石场
+# fishing-game-source｜捕鱼游戏源码 | Fishing Game Source Code | Cocos+C++ 街机捕鱼平台 | 经典模式+比赛+玉石场
 
-&lt;p align="center"&gt;
-  &lt;img src="https://img.shields.io/badge/Cocos2d-x-3.17+-blue?style=for-the-badge" alt="Cocos"&gt;
-  &lt;img src="https://img.shields.io/badge/C%2B%2B-17-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="C++17"&gt;
-  &lt;img src="https://img.shields.io/badge/Node.js-18+-brightgreen?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js"&gt;
-  &lt;img src="https://img.shields.io/badge/MySQL-8.0-blue?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL 8.0"&gt;
-  &lt;img src="https://img.shields.io/badge/iOS%20%7C%20Android-Cross%20Platform-blueviolet?style=for-the-badge" alt="Cross Platform"&gt;
-&lt;/p&gt;
+<p align="center">
+  <img src="https://img.shields.io/badge/Cocos2d-x-3.17+-blue?style=for-the-badge" alt="Cocos">
+  <img src="https://img.shields.io/badge/C%2B%2B-17-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="C++17">
+  <img src="https://img.shields.io/badge/Node.js-18+-brightgreen?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/MySQL-8.0-blue?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL 8.0">
 
-&lt;h1 align="center"&gt;🎣 Fishing Coin Lobby&lt;/h1&gt;
+ <img src="https://img.shields.io/badge/iOS%20%7C%20Android-Cross%20Platform-blueviolet?style=for-the-badge" alt="Cross Platform">
+</p>
 
-&lt;p align="center"&gt;
-  &lt;b&gt;捕鱼金币大厅源码 / 捕鱼积分大厅源码 — 商业级街机游戏平台&lt;/b&gt;&lt;br&gt;
-  &lt;b&gt;Commercial Fishing Coin Lobby Source Code | Arcade Game Platform&lt;/b&gt;&lt;br&gt;
-  &lt;b&gt;支持 iOS / Android | 海魔来袭+经典模式+比赛+玉石场+找刺激 | 快速二次开发&lt;/b&gt;
-&lt;/p&gt;
+<h1 align="center">🎣 Fishing Coin Lobby</h1>
 
-&lt;p align="center"&gt;
-  &lt;a href="#核心玩法"&gt;🎮 核心玩法&lt;/a&gt; •
-  &lt;a href="#系统功能"&gt;🛒 系统功能&lt;/a&gt; •
-  &lt;a href="#技术架构"&gt;⚙️ 技术架构&lt;/a&gt; •
-  &lt;a href="#部署指南"&gt;🚀 快速部署&lt;/a&gt;
-&lt;/p&gt;
+<p align="center">
+  <b>捕鱼金币大厅源码 / 捕鱼积分大厅源码 — 商业级街机游戏平台</b><br>
+  <b>Commercial Fishing Coin Lobby Source Code | Arcade Game Platform</b><br>
+  <b>支持 iOS / Android | 海魔来袭+经典模式+比赛+玉石场+找刺激 | 快速二次开发</b>
+</p>
+<p align="center">
+  <a href="#核心玩法">🎮 核心玩法</a> •
+  <a href="#系统功能">🛒 系统功能</a> •
+  <a href="#技术架构">⚙️ 技术架构</a> •
+  <a href="#部署指南">🚀 快速部署</a>
+</p>
 
 ---
 
