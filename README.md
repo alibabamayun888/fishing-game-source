@@ -188,7 +188,9 @@ vim Admin/.env
 
 # 4. 重新打包
 ./build.sh
+```
 
+## 项目结构
 fishing-coin-lobby/
 ├── Client/                    # Cocos 客户端
 │   ├── resources/             # 场景、UI、鱼类、炮台资源
@@ -263,7 +265,7 @@ npm run build
 cd Admin && npm start
 
 
-联系我们
+## 联系我们
 | 渠道       | 联系方式                                                                          |
 | -------- | ----------------------------------------------------------------------------- |
 | Email    | <ttpoker40@gmail.com>                                                         |
@@ -271,7 +273,7 @@ cd Admin && npm start
 | Issues   | [GitHub Issues](https://github.com/alibabamayun888/fishing-coin-lobby/issues) |
 
 
-常见问题
+## 常见问题
 
 Q1: 这个项目可以商用吗？需要授权吗？
 A: 源码仅供学习研究。如需商用上线运营，请联系获取商业授权协议和技术支持。
@@ -282,7 +284,11 @@ A: 模块化设计，UI/音效/配置均可快速替换。最小团队 1 名 Coc
 Q4: 最大支持多少人在线？
 A: 单节点部署支持 10000 并发，通过 K8s 横向扩展可支撑百万级 DAU。
 
+## SEO 关键词索引
 
+以下关键词用于搜索引擎索引，覆盖全球多语言搜索场景
+## 中文关键词： 捕鱼游戏源码、街机游戏源码、Cocos 捕鱼源码、C++ 街机服务器、捕鱼运营后台、捕鱼游戏 APP 源码、金币场捕鱼源码、积分场捕鱼源码、捕鱼二次开发、捕鱼定制开发、捕鱼出海、海魔来袭源码、捕鱼比赛模式、捕鱼玉石场、街机捕鱼平台、Ocean King 源码、Fish Shooter 源码、捕鱼弹头夺宝、捕鱼四国征战、捕鱼斗地主、捕鱼麻将、捕鱼龙虎斗、捕鱼红黑大战、捕鱼水浒传、捕鱼好运连连、捕鱼游戏引擎、捕鱼服务端源码、街机游戏开发、多人捕鱼游戏、实时捕鱼服务器、捕鱼游戏框架、捕鱼游戏平台、捕鱼游戏系统、捕鱼游戏解决方案、捕鱼游戏技术架构、捕鱼游戏客户端、捕鱼游戏服务端
+## English Keywords: Fishing Game Source Code, Fish Shooter Platform Source Code, Ocean King Source Code, Arcade Fishing Game Source Code, Cocos Fishing Game, C++ Arcade Server, High Performance Fishing Platform, Casino Fishing Game, Fish Game App Source Code, Fishing Game for iOS, Fishing Game for Android, Fishing Game White Label, Fishing Game Custom Development, Fish Game Admin Panel, Fish Game Operation System, Fish Game Store System, Fish Game Daily Bonus, Fish Game Jackpot, Fish Game Tournament, Fish Game Jade Room, Fish Game Adventure Mode, Sea Monster Attack Fishing, Fish Shooter Coin Lobby, Fish Game Backend Node.js, Fishing Game Engine, Multiplayer Fishing Game, Real-time Fishing Server, Fishing Game Framework, Fishing Game Platform, Fishing Game System, Fishing Game Solution, Fishing Game Architecture, Fishing Game Client, Fishing Game Server, Online Fishing Game, HTML5 Fishing Game, Web Fishing Game, Mobile Fishing Game, Fishing Game Development, Fishing Game GitHub, Open Source Fishing Game, Fishing Game Demo, Fishing Game Tutorial
 <p align="center">
   <b>如果这个项目对你有帮助，请点个 Star 支持一下！</b><br>
   <i>If this project helps you, please give it a star and share it with your friends!</i><br><br>
