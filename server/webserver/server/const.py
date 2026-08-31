@@ -1,0 +1,455 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from sets import Set
+
+MAIN_LOGGER = "pyserver"
+ONLINE_STAT_LOGGER = "online_stat"
+
+#定义c++层调用python层的事件类型
+
+CONTEXT_TYPE_EVENT_CMD = 0
+CONTEXT_TYPE_EVENT_LOGIN = 1
+CONTEXT_TYPE_EVENT_LOGOUT = 2
+CONTEXT_TYPE_EVENT_SVR_CMD = 3 #服务器间协议
+CONTEXT_TYPE_EVENT_TIMEOUT = 4 #定时器
+
+
+#定义msgpack打包方式
+MSGPACK_TYPE_KEYVALUE = 0
+MSGPACK_TYPE_ARRAY = 1
+
+#进出房间标识
+ENTER_ROOM = 0
+EXIT_ROOM = 1
+
+#游戏类型定义
+GAMETYPE_ALL= 0 # 0: 所有游戏
+GAMETYPE_BY = 1 # 1：捕鱼
+GAMETYPE_HH = 2 # 2：红黑
+GAMETYPE_LX = 3 # 3：连线
+GAMETYPE_BULLET = 4 # 4：弹头寻宝
+GAMETYPE_GEM_CITY = 5 # 5：宝石迷城
+GAMETYPE_NN = 6 # 6:百人牛牛
+
+#鱼状态，射中鱼时使用
+FISH_STATE_ALIVE = 1
+FISH_STATE_DEAD = 0
+
+#物品道具id定义
+ITEM_COIN = 10010001 #金币
+ITEM_GOLD = 10010002 #钻石
+ITEM_LOTTERY = 10010003 #奖券
+ITEM_JADE = 10010012 #玉石
+ITEM_STN = 20070001 #强化石
+ITEM_STONE = 20070002 #原石精华
+ITEM_LOCKING = 20030001 #锁定
+ITEM_FROZEN = 20030002 #冰封
+ITEM_RAGE = 20030003 #狂暴
+ITEM_NUCLEAR = 20030004 #核弹
+ITEM_MAGICLAMP = 20030005 #神灯
+ITEM_BRONZE_NUCLEAR = 20010001 #青铜弹头
+ITEM_SILVER_NUCLEAR = 20010002 #白银弹头
+ITEM_GOLD_NUCLEAR = 20010003 #黄金弹头
+ITEM_PLATINUM_NUCLEAR = 20010004 #铂金弹头
+ITEM_CRYSTAL = 20070003 #魔晶
+ITEM_ACTIVITY_COIN = 10010006 #活动币
+ITEM_POKER  = 2008             #花色
+ITEM_BOTTLE = 2009             #酒瓶
+ITEM_BOMB   = 2001             #弹头类型
+ITEM_BOTTLE_ID = 20090001      #酒瓶ID
+ITEM_SPADE  = 20080001        #黑桃
+ITEM_CROWN  = 20080005        #皇冠  
+ITEM_WARHEADER_INTEGRAL = 10010010 #弹头积分
+ITEM_POKER_INTEGRAL = 10010009     #花色积分
+ITEM_RMB_RED_PACKET = 70010001     #红包 真钱，可以发送到微信公众号钱包
+
+#进入房间方式
+ENTER_ROOM_NORMAL = 1 #正常进入
+ENTER_ROOM_CHANGE = 2 #切换进入
+ENTER_ROOM_CHOOSESIT = 3 #选座
+
+#离开房间方式
+LEAVE_ROOM_NORMAL = 1 #正常进入
+LEAVE_ROOM_CHANGE = 2 #切换进入
+
+#捕鱼房间类型
+NEW_FIELD_ROOM = 2      #新手场
+ABYSSAL_BEASTS_ROOM = 3 #深海巨兽
+CAPT_DEAD_ROOM = 4      #幽灵船长
+CRYSTAL_FIELD_ROOM = 5  #魔晶场
+SIREN_FIELD_ROOM = 6    #海妖场
+MATCH_FIELD_ROOM = 101  #比赛场
+
+#技能
+SKILL_ID_LOCKING = 1001 #锁定
+SKILL_ID_FROZEN = 1002 #冰封
+SKILL_ID_RAGE = 1003 #狂暴
+SKILL_ID_CALLFISH = 1004 #召唤
+SKILL_ID_CHANGE_SCRIPT = 1006 #
+SKILL_ID_MUST_DIE = 2001 #致命一击
+SKILL_ID_KEY_STAND = 2002 #定海神针
+SKILL_ID_METEOR = 2003 #陨星术
+
+
+#皮肤
+CANNON_SKIN_PU_TONG_ONE = 1000001
+CANNON_SKIN_FULL_FIRE = 2000001
+CANNON_SKIN_CRAZY_BOMB = 3000001        #狂暴
+CANNON_SKIN_ROCKET_HEADER = 5000001     #火箭钻头
+
+#鱼类型
+FISH_TYPE_NORMAL = 1 #普通鱼
+FISH_TYPE_CATCH_ALL = 2 #一网打尽
+FISH_TYPE_SILVER_DRAGON = 3 #雷银龙
+FISH_TYPE_BOMB = 4 #炸弹
+FISH_TYPE_KING = 5 #鱼王
+FISH_TYPE_BOSS = 6 #BOSS
+FISH_TYPE_BONUS = 7 #奖金鱼
+FISH_TYPE_NUCLEAR = 8 #弹头鱼
+FISH_TYPE_CRYSTAL = 9 #魔晶鱼
+FISH_TYPE_TURN_CARDS = 10 #翻牌鱼
+FISH_TYPE_CLOWN = 11 #小丑鱼
+FISH_TYPE_POKER = 12 #花色鱼
+FISH_TYPE_BIG_WARHEAD = 13 #大弹头鱼
+FISH_TYPE_SIREB_BATMAN= 14 #海妖水母
+FISH_TYPE_CRYSTAL_DIAL= 15 #魔晶转盘鱼
+FISH_TYPE_PRECIOUS = 16    #宝藏鱼
+FISH_TYPE_SANTACLAUS = 17  #圣诞老人
+FISH_TYPE_JADE      = 18   #玉石鱼
+FISH_TYPE_JADE_BOSS = 19   #玉石炸弹鱼
+FISH_TYPE_ROCKET_HEADER = 20   #钻头鱼
+
+#鱼ID
+FISH_ID_ROCKET_HEADER = 162   #钻头鱼
+
+#缓存表
+CACHE_USERINFO = "cache_userInfo"
+CACHE_ITEMMGR = "cache_itemMgr"
+CACHE_ITEMCHGMGR = "cache_itemChgMgr"
+CACHE_USERCHGINFO = "cache_userChgInfo"
+CACHE_USERCHGINFO_UID = 2018
+PET_TABLE_NAME = "tbl_player_pet_"
+
+#炮类型
+CANNON_TYPE_NORMAL = 1 #普通炮弹
+CANNON_TYPE_NUCLEAR = 2 #弹头
+CANNON_TYPE_VIP = 3 #VIP炮台
+CANNON_TYPE_ROCKET = 3 #钻头
+
+#鱼是否死亡
+FISH_ALIVE = 0 #鱼活着
+FISH_DEATH = 1 #鱼死
+FISH_SECOND_DEATH = 2 #鱼二次击杀死亡
+
+#任务类型
+TASK_TYPE_KILLFISH = 1 #击杀鱼
+TASK_TYPE_USESKILL = 4 #使用技能
+
+#房间类型
+ROOM_TYPE_NOVICE_BEACH = 2 #新手海滩
+ROOM_TYPE_DEEPSEA_BEHEMOTH = 3 #深海巨兽
+ROOM_TYPE_CAPTAIN_GHOST = 4 #幽灵船长
+ROOM_TYPE_SEADEMONS_COMING = 5 #海魔来袭
+ROOM_TYPE_JADE = 7  #玉石场
+ROOM_TYPE_FAST_RACE = 101 #快速赛
+
+#用户数据类型：0-全部数据 1-baseinfo基础用户信息等级经验等 2-iteminfo物品道具数据 3-byinfo捕鱼炮倍等数据 4-contribution用户充值贡献度等
+RELOADTYPE_ALLINFO = 0
+RELOADTYPE_BASEINFO = 1
+RELOADTYPE_ITEMINFO = 2
+RELOADTYPE_BYINFO = 3
+RELOADTYPE_CONTRIBUTION = 4
+
+#操作类型：1 破产补助 2充值 3后台修改用户控制数值
+ADDBYUSERCTRL_BANKRUPT = 1
+ADDBYUSERCTRL_RECHARGE = 2
+MODIFYUSERCTRL_BS      = 3
+
+#公告类型
+BROADCAST_TYPE_DRAWDO = 1 #抽奖
+BROADCAST_TYPE_KILL = 2 #击杀
+#公告编号
+BROADCAST_TYPE_DRAWDO_COIN = 8001 #抽奖金币
+BROADCAST_TYPE_KILL_BONUS = 8002 #击杀奖金鱼
+BROADCAST_TYPE_DRAWDO_LOTTERY = 8004 #抽奖奖券
+BROADCAST_TYPE_KILL_NUCLEAR = 8005 #击杀弹头鱼
+BROADCAST_TYPE_KILL_CARDS = 8006 #击杀翻牌鱼
+BROADCAST_TYPE_KILL_JADE_BOSS = 8009 #击杀玉石boss
+#公告条件
+BROADCAST_CONF_COIN = 1000000 #100万金币
+
+#破产补助次数
+BANKRUPT_TIMES = 3
+
+HH_RED_AREA = 1 # 红方
+HH_BLACK_AREA = 2 # 黑方
+HH_LUCKY_AREA = 3 # 幸运一击
+
+
+HH_STATE_WAIT_BET = 1 		# 等待下注
+HH_STATE_BET = 2 			# 下注
+HH_STATE_OPEN_CARD = 4 		# 开牌
+HH_STATE_REWARD = 5 		# 发奖
+#上报PF进出房间
+UPDATE_PF_ENTERROOM = 0
+UPDATE_PF_EXITROOM = 1
+UPDATE_PF_ROOMMODE_BY_NORMAL = 1
+
+#日志类型
+COIN_CHANGE_LOG = 26 #金币变更日志
+ITEM_CHANGE_LOG = 31 #物品变更日志
+BY_FISH_LOG     = 44 #捕鱼日志
+FORGE_LOG = 42 #炮台升级日志
+CONTRIBUTION_CHANGE_LOG = 45 #贡献值变化日志
+MATCH_RECORD_LOG = 46 #进出房间日志
+RED_BLACK_WAR_LOG = 47 #红黑大战
+LINK_GAME_LOG = 48 # 水浒传
+MATCH_INFO_LOG = 49 # 牌局信息
+USER_MATCH_INFO_LOG = 50 # 玩家牌局信息
+USER_LOGIN_LOG = 51     # 用户登陆登出小游戏
+
+
+#游戏ID
+GAME_ID_BY = 2002 
+GAME_ID_DT = 1051
+GAME_ID_LX = 1047
+GAME_ID_HH = 1033
+GAME_ID_NN = 1020
+GAME_ID_DT_NN = 1055
+GAME_ID_GEM = 1053 #宝石迷城
+GAME_ID_SH = 1057   # 水浒
+GAME_ID_SGZZ = 1061 # 四国征战金币场
+GAME_ID_DT_SGZZ = 1062 # 四国征战玉石场
+
+#日志版本信息
+APP_ID = 1001
+BI_VERSION = 1.0
+GAME_VERSION = 1
+LOG_VISION = 1.0
+#日志主题
+THEME_ID_COIN_CHG = "coin_change_log"
+THEME_ID_ITEM_CHG = "props_change_log"
+THEME_ID_BY_FHIS  = "log_shoot_fish"
+THEME_ID_CANNON_LVUP = "forge"
+THEME_ID_CONTRIBUTION_CHG = "by_data"
+THEME_ID_MATCH_RECORD = "match_record"
+THEME_ID_RED_BLACK_WAR = "red_black_war"
+THEME_ID_LINK_GAME = "link_game"
+THEME_ID_GAME_MATCH_INFO = "game_match_info_log"
+THEME_ID_USER_MATCH_INFO = "user_game_match_info_log"
+THEME_ID_USER_LOGIN = "account_act_log"
+
+ZONE_ID = 0 #区号默认0
+REGISTER_CHANNEL = 0 #注册渠道
+#变化类型
+CHANGE_TYPE_COST = 0 #消耗
+CHANGE_TYPE_GET  = 1 #获得
+SHELL_TYPE_COIN = 0 #金币
+SHELL_TYPE_CRYSTAL = 1 #魔晶
+
+#大数据类型细分
+BIGDATACHGTYPE_FISHCOMMONDOWN = 10001     #捕鱼(普通)掉落道具
+BIGDATACHGTYPE_FISHKILLDOWN   = 10002     #捕鱼(击杀)掉落道具
+BIGDATACHGTYPE_FISHNOSECONTRBDOWN = 10003 #捕鱼(弹头贡献)掉落道具
+BIGDATACHGTYPE_NOSEFISHDOWN   = 10004     #弹头鱼掉落道具(不扣除充值贡献度)
+BIGDATACHGTYPE_ENERCYFISHDOWN = 10005     #魔晶鱼掉落道具
+BIGDATACHGTYPE_NOSEFISHDOWN_R = 10006     #弹头鱼掉落道具(扣除充值贡献度)
+BIGDATACHGTYPE_ACTIVITY_DROP  = 10007     #活动掉落
+BIGDATACHGTYPE_USESKILL = 12001           #使用技能
+BIGDATACHGTYPE_USENOSE  = 12002           #使用弹头
+BIGDATACHGTYPE_CANNONLVUP = 12003         #炮台升级
+BIGDATACHGTYPE_GOLDPOOL   = 12004         #奖池抽奖(不扣除充值贡献度)
+BIGDATACHGTYPE_KILLFISH   = 12005         #打鱼消耗/获得金币钻石
+BIGDATACHGTYPE_EMOJI      = 12006         #使用魔法表情
+BIGDATACHGTYPE_POKER_DROP = 12007         #花色掉落
+BIGDATACHGTYPE_BWDROP     = 12008         #大炸弹鱼掉落道具(不扣除充值贡献度)
+BIGDATACHGTYPE_BWDROP_R   = 12009         #大炸弹鱼掉落道具(扣除充值贡献度)
+BIGDATACHGTYPE_EXCHANGE   = 12010         #游戏兑换
+BIGDATACHGTYPE_PET_SKILL  = 12013         #宠物技能击杀
+BIGDATACHGTYPE_MUST_DIE   = 12011         #致命一击技能操作
+BIGDATACHGTYPE_KEY_STAND  = 12012         #定海神针技能操作
+BIGDATACHGTYPE_METEOR     = 12013	      #陨星术技能操作
+JADE_BOMB_CTRL            = 20208         #玉石修改弹头净分
+GET_BOMB_CTRL             = 20202         #获得弹头修改弹头净分
+
+
+CONTRIBUTION_TYPE_CHARGE = 1 #充值贡献度
+CONTRIBUTION_TYPE_LOTTERY= 2 #奖券贡献度
+CONTRIBUTION_TYPE_BOMB   = 3 #弹头贡献度
+
+BIGDATA_RED_BLACK_ID = 1033                 # 大数据红黑游戏ID
+BIGDATA_RED_BLACK_ROOM_ID = 1033001         # 红黑房间号
+
+BIGDATA_RED_BLACK_BET = 82001           # 红黑下注
+BIGDATA_RED_BLACK_WIN = 82002           # 红黑盈分
+
+BIGDATA_LINK_GAME_BET = 83001           # 好运连连压注
+BIGDATA_LINK_GAME_WIN = 83002           # 好运连连盈分
+BIGDATA_SHUIHU_GAME_BET = 83003           # 水浒压注
+BIGDATA_SHUIHU_GAME_WIN = 83004           # 水浒盈分
+BIGDATA_SHUIHU_COST_CONTRIBUTION     = 83005 		  #水浒传消耗充值贡献度
+BIGDATA_LX_COST_CONTRIBUTION 		  = 83006 		  #连线消耗充值贡献度
+BIGDATA_SHUIHU_COST_BOMB_SCORE     = 83007 		  #水浒传消耗弹头净分
+BIGDATA_LX_COST_BOMB_SCORE 		  = 83008 		  #连线消耗充弹头净分
+
+BIGDATA_LINK_GAME_ID=1047               # 好运连连ID
+BIGDATA_LINK_ROOM_ID=1047001       # 好运连连房间ID
+
+BIGDATA_SHUIHU_GAME_ID=1057               # 水浒ID
+BIGDATA_SHUIHU_ROOM_ID=1057001       # 水浒房间ID
+
+BIGDATA_BULLET_GAME_ID = 1051			# 弹头寻宝
+BIGDATA_BULLET_ROOM_ID = 1051001	    # 弹头寻宝房间ID
+BIGDATA_BULLET_SECRET_ROOM_ID = 1051002 # 神秘寻宝房间ID
+BIGDATA_BULLET_HUNT = 85001 			# 弹头寻宝
+BIGDATA_BULLET_SECRET_HUNT = 85002      # 神秘寻宝
+
+BIGDATA_GEM_CITY_ID = 1053          # 宝石迷城
+BIGDATA_GEM_CITY_ROOM_ID = 1053001  # 宝石迷城房间ID
+
+BIGDATA_NN_GAME_ID = 1020           # 百人牛牛
+BIGDATA_NN_ROOM_ID = 1020001        # 百人牛牛房间ID
+BIGDATA_NN_WIN = 10201              # 牛牛输赢
+BIGDATA_NN_REWARD = 10202           # 牛牛开奖
+BIGDATA_NN_CHAT = 10203             # 牛牛发送表情
+BIGDATA_NN_CANCEL_BANKER = 10204    # 牛牛下庄扣手续费
+
+
+BIGDATA_DT_NN_GAME_ID = 1055        # 弹头百人牛牛
+BIGDATA_DT_NN_ROOM_ID = 1055001     # 弹头百人牛牛房间ID
+BIGDATA_DT_NN_WIN = 10551           # 弹头牛牛输赢
+BIGDATA_DT_NN_REWARD = 10552        # 弹头牛牛开奖
+BIGDATA_DT_NN_CHAT = 10553             # 弹头牛牛发送表情
+BIGDATA_DT_NN_CANCEL_BANKER = 10554    # 弹头牛牛下庄扣手续费
+
+BIGDATA_SGZZ_GAME_ID = 1061         # 四国征战
+BIGDATA_SGZZ_ROOM_ID = 1061001      # 四国征战房间ID
+BIGDATA_SGZZ_WIN = 10611            # 四国征战输赢
+BIGDATA_SGZZ_REWARD = 10612         # 四国征战开奖
+BIGDATA_SGZZ_CHAT = 10613             # 四国征战发送表情
+BIGDATA_SGZZ_CANCEL_BANKER = 10614    # 四国征战下庄扣手续费
+
+BIGDATA_DT_SGZZ_GAME_ID = 1062         # 弹头四国征战
+BIGDATA_DT_SGZZ_ROOM_ID = 1062001      # 弹头四国征战房间ID
+BIGDATA_DT_SGZZ_WIN = 10621            # 弹头四国征战输赢
+BIGDATA_DT_SGZZ_REWARD = 10622         # 弹头四国征战开奖
+BIGDATA_DT_SGZZ_CHAT = 10623             # 弹头四国征战发送表情
+BIGDATA_DT_SGZZ_CANCEL_BANKER = 10624    # 弹头四国征战下庄扣手续费
+
+
+#比赛状态
+MATCH_START = "match_start"
+MATCH_FINISH = "match_finish"
+
+#WINCTRL调用类型
+SETBETIN                = 1
+SETBETOUT               = 2
+CHECKFISHDEAD           = 3
+RESETDAYBETOUT          = 4
+SETCTRLVALUE            = 5
+ADDQFBASECOIN           = 6
+DEALWITHEXTRALOTTERY    = 7
+DEALWITHCHARGE          = 8
+DEALWITHRELIEF          = 9
+ADDTEMPQF               = 10
+
+#技能类型
+SKILL_TYPE_LOCKING = 1  #锁定
+SKILL_TYPE_FROZEN = 2   #冰冻
+SKILL_TYPE_RAGE = 3     #狂暴
+SKILL_TYPE_CALLFISH = 4 #召唤鱼
+SKILL_TYPE_HORN = 6     #号角
+SKILL_TYPE_SINGLE = 7   #单体锁定技能
+SKILL_TYPE_LINE   = 8   #直线攻击技能
+SKILL_TYPE_BOMB   = 9   #爆炸攻击技能
+
+#金币延时场景
+ROOM_BY_FISH = 1 #房间捕鱼
+DRAW_DO      = 2 #捕鱼奖池抽奖
+KILL_CLOWN   = 3 #击杀小丑
+CANNON_LV_UP = 5 #炮台解锁礼包
+PLAYER_LV_UP = 6 #玩家升级
+KILL_SAILOR  = 7 #击杀水手
+KILL_BIG_WARHEAD = 8 #击杀大弹头鱼
+KILL_CRYSTAL = 13 #击杀魔晶转盘鱼
+KILL_JADE_BOSS = 16 #击杀boss鱼
+
+
+#活动定义
+ACTIVITY_MID_AUTUMN = 1 #月满中秋
+ACTIVITY_WARHEADER_BLAST = 2 #弹头欢乐炸
+ACTIVITY_NATIONAL_DAY_CARNIVAL = 3 #国庆狂欢
+ACTIVITY_FESTIVAL = 1 #节日活动
+ACTIVITY_HOLIDAY_WARHEAD = 5 #节日欢乐炸
+
+
+
+#服务器类型定义
+GLOBAL_SERVER = 5 #全局服
+
+BULLET_TABLE_NAME = "tbl_bullet_table"
+BULLET_FIELD_NAME = "room"
+BULLET_FILED_KEY = 1000000
+
+HH_TABLE_NAME = "tbl_hh_table"
+HH_FIELD_NAME = "room"
+
+NN_TABLE_NAME = "tbl_nn_table"
+NN_FIELD_NAME = "room"
+
+SGZZ_TABLE_NAME = "tbl_sgzz_table"
+SGZZ_FIELD_NAME = "room"
+
+
+LX_TABLE_NAME = "tbl_lx_table"
+LX_FIELD_NAME = "room"
+
+SHZ_TABLE_NAME = "tbl_shz_table"
+SHZ_FIELD_NAME = "room"
+
+BULLET_GLOBAL_KEY = "bullet_fare_balance"
+
+
+#宝石迷城
+GEM_TYPE_GREEN = 1       #绿宝石:1
+GEM_TYPE_BLUE = 2        #蓝宝石:2
+GEM_TYPE_YELLOW = 3      #黄宝石:3  
+GEM_TYPE_RED = 4         #红宝石:4 
+GEM_TYPE_PURPLE = 5      #紫宝石:5 
+GEM_TYPE_BOMB = 6        #炸弹：6 
+
+
+ENTER_GAME = 1
+LEAVE_GAME = 2
+
+#弹头接口控制枚举
+BOMB_TYPE_INIT  = 1    #弹头的初始化
+BOMB_TYPE_USE   = 2    #弹头的使用
+BOMB_TYPE_RECHARGE = 3 #充值弹头的调用
+BOMB_TYPE_GET   = 4    #获取弹头调用 
+BOMB_TYPE_DROP  = 5    #弹头掉落，击杀鱼或抽奖
+BOMB_TYPE_BETOUT= 6    #消耗金币时使用
+BOMB_TYPE_INIT_CONF = 7#弹头配置的初始化
+
+#宠物技能击杀判断类型
+PET_SKILL_DIE_TYPE_ONE = 1  #类型1 直接死亡
+PET_SKILL_DIE_TYPE_TWO = 2  #类型2 boss死亡判断
+PET_SKILL_DIE_TYPE_THREE= 3 #类型3 不能死亡
+PET_SKILL_DIE_TYPE_FOUR = 4 #类型4 剩下的鱼
+
+#微信红包兑换状态
+WX_RED_PACKET_EXCHANGE_STATUS_WAIT    = 1  #正在兑换，此时已经扣除了玩家的游戏红包道具，等待腾讯给玩家送钱
+WX_RED_PACKET_EXCHANGE_STATUS_SUCCESS = 2  #兑换成功，此时钱已经发给玩家
+WX_RED_PACKET_EXCHANGE_STATUS_FAILED  = 3  #兑换失败，此时，玩家没有收到钱，但是我们已经扣除玩家的游戏红包道具了
+
+#微信公众号绑定状态
+WX_PUBLIC_STATUS_BIND   = 1   #已绑定
+WX_PUBLIC_STATUS_UNBIND = 2   #已解绑
+
+#微信绑定/解绑账号日志
+WXPUBLICBINDACTYPE_UNBIND     = 0 		#玩家自己解绑
+WXPUBLICBINDACTYPEE_BIND      = 1 		#绑定
+WXPUBLICBINDACTYPE_SYS_UNBIND = 2 		#官方解绑
+
+#END

@@ -1,0 +1,18 @@
+1 在当前目录下新建csv文件夹，svn checkout 策划配置文件：svn路径下的 05配置下面的csv配置文件
+
+2 在gameserver/pyscript目录和unionserver/pyscript目录下新建data文件夹，svn co 策划配置文件：svn路径下的python配置文件
+  （20190507修改为svn直接映射到策划配置文件svn目录，无需再手工配置1/2步骤）
+
+3 gen目录，执行./convert.sh 
+
+4 gen目录，执行gen.sh
+
+5 idl目录，执行gen.sh生成thrift代码
+
+6 到各server下例如gateserver下make 编译即可
+
+7 搭建新环境时，在tools目录下运行create_config.py 生成新的.config.ini，具体操作请见tools目录
+
+8 配置文件无需手工填写，需修改游戏项目根目录下的.config.ini，和tpl文件夹下的模板，可使用tools下面的脚本生成具体的配置文件
+
+9 tools目录，下面有根据旧.config.ini生成新环境的.config.ini的脚本，有一键启停所有server的脚本，有一键更新sbin下面的daemon.sh脚本，有根据模板生成配置文件的脚本等工具，具体请见tools文件夹
