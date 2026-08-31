@@ -35,7 +35,7 @@
 
 ## 產品截圖
 
-以下截圖直接讀取仓庫 `docs/assets/screenshots/` 目錄下的產品圖片。
+
 
 ![捕鱼遊戲產品截圖 01](docs/assets/screenshots/dx3.jpg)
 ![捕鱼遊戲產品截圖 02](docs/assets/screenshots/hx3.jpg)
