@@ -39,7 +39,6 @@
 - [项目结构](#项目结构)
 - [部署指南](#部署指南)
 - [常见问题](#常见问题)
-- [SEO关键词](#seo关键词)
 - [许可证](#许可证)
 - [联系我们](#联系我们)
 
@@ -51,13 +50,11 @@
 
 本系统包含 **海魔来袭、经典模式、比赛模式、玉石场、找刺激** 等核心玩法，覆盖 1-30000 倍率区间，内置 **商城、排行榜、保险箱、任务、JackPot、刮刮乐、转盘** 等完整系统，以及 **Node.js 运营后台**，支持**中文、英文等多语言**
 
-&gt; **适合搜索关键词**：捕鱼金币大厅源码、捕鱼大厅源码、Fishing Game Source Code、Ocean King Source Code、Fish Shooter Platform、街机游戏源码、Arcade Game Source Code、Cocos 捕鱼源码、C++ 街机服务器、捕鱼运营后台、捕鱼游戏 APP 源码、金币场捕鱼源码、积分场捕鱼源码、捕鱼二次开发、捕鱼出海、海魔来袭源码、捕鱼比赛模式、捕鱼玉石场
-
 | 语言 | 项目名称 |
 |------|---------|
 | 中文 | 捕鱼金币大厅源码 / 捕鱼源码 / 街机游戏项目 |
 | English | Fishing Coin Lobby Source Code / Fish Shooter Platform |
-| Tiếng Việt | Mã nguồn Sảnh Bắn Cá / Nền tảng game bắn cá |
+
 
 ---
 
@@ -180,27 +177,9 @@ vim Admin/.env
 
 ## 项目结构
 fishing-coin-lobby/
-├── Client/                    # Cocos 客户端
-│   ├── resources/             # 场景、UI、鱼类、炮台资源
-│   ├── src/                   # C++ / JavaScript 游戏逻辑
-│   ├── frameworks/            # Cocos2d-x 框架
-│   └── build/                 # iOS / Android 打包脚本
+├── assets/                    # Cocos 客户端
 ├── Server/                    # C++ 游戏服务端
-│   ├── Core/                  # 核心游戏引擎（发炮、碰撞、结算）
-│   ├── Network/               # 网络层（WebSocket / TCP）
-│   ├── DB/                    # 数据库 ORM 与缓存
-│   ├── Room/                  # 房间管理（经典/比赛/玉石场）
-│   ├── Fish/                  # 鱼类生成与 AI 路径
-│   └── Gateway/               # 网关与负载均衡
-├── Admin/                     # Node.js 运营后台
-│   ├── server/                # Express 后端 API
-│   ├── web/                   # Vue3 管理后台
-│   └── config/                # 配置文件
-├── Proto/                     # Protobuf 通信协议
-├── Config/                    # 游戏配置（倍率、鱼群、活动）
-├── Docker/                    # Docker 镜像与编排
 ├── Docs/                      # 部署文档、API 文档、发布指南
-├── Tests/                     # 单元测试与压测脚本
 └── README.md                  # 本文件
 
 
@@ -283,15 +262,10 @@ A: 源码仅供学习研究。如需商用上线运营，请联系获取商业�
 Q2: 支持哪些平台？可以发布到 App Store 吗？
 A: 支持 iOS 12+ 和 Android 5+
 Q3: 二次开发难度大吗？需要多少人团队？
-A: 模块化设计，UI/音效/配置均可快速替换。最小团队 1 名 Cocos 开发 + 1 名服务端开发即可在 2 周内完成定制开发上线。
+A: 模块化设计，UI/音效/配置均可快速替换。最小团队 1 名 Cocos 开发 + 1 名服务端开发即可在
 Q4: 最大支持多少人在线？
 A: 单节点部署支持 10000 并发，通过 K8s 横向扩展可支撑百万级 DAU。
 
-## SEO 关键词索引
-
-以下关键词用于搜索引擎索引，覆盖全球多语言搜索场景
-## 中文关键词： 捕鱼游戏源码、街机游戏源码、Cocos 捕鱼源码、C++ 街机服务器、捕鱼运营后台、捕鱼游戏 APP 源码、金币场捕鱼源码、积分场捕鱼源码、捕鱼二次开发、捕鱼定制开发、捕鱼出海、海魔来袭源码、捕鱼比赛模式、捕鱼玉石场、街机捕鱼平台、Ocean King 源码、Fish Shooter 源码、捕鱼弹头夺宝、捕鱼四国征战、捕鱼斗地主、捕鱼麻将、捕鱼龙虎斗、捕鱼红黑大战、捕鱼水浒传、捕鱼好运连连、捕鱼游戏引擎、捕鱼服务端源码、街机游戏开发、多人捕鱼游戏、实时捕鱼服务器、捕鱼游戏框架、捕鱼游戏平台、捕鱼游戏系统、捕鱼游戏解决方案、捕鱼游戏技术架构、捕鱼游戏客户端、捕鱼游戏服务端
-## English Keywords: Fishing Game Source Code, Fish Shooter Platform Source Code, Ocean King Source Code, Arcade Fishing Game Source Code, Cocos Fishing Game, C++ Arcade Server, High Performance Fishing Platform, Casino Fishing Game, Fish Game App Source Code, Fishing Game for iOS, Fishing Game for Android, Fishing Game White Label, Fishing Game Custom Development, Fish Game Admin Panel, Fish Game Operation System, Fish Game Store System, Fish Game Daily Bonus, Fish Game Jackpot, Fish Game Tournament, Fish Game Jade Room, Fish Game Adventure Mode, Sea Monster Attack Fishing, Fish Shooter Coin Lobby, Fish Game Backend Node.js, Fishing Game Engine, Multiplayer Fishing Game, Real-time Fishing Server, Fishing Game Framework, Fishing Game Platform, Fishing Game System, Fishing Game Solution, Fishing Game Architecture, Fishing Game Client, Fishing Game Server, Online Fishing Game, HTML5 Fishing Game, Web Fishing Game, Mobile Fishing Game, Fishing Game Development, Fishing Game GitHub, Open Source Fishing Game, Fishing Game Demo, Fishing Game Tutorial
 <p align="center">
   <b>如果这个项目对你有帮助，请点个 Star 支持一下！</b><br>
   <i>If this project helps you, please give it a star and share it with your friends!</i><br><br>
